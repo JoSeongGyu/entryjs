@@ -1,0 +1,26 @@
+services:
+  entryjs:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      # 소스 코드 마운트
+      - .:/app
+      # node_modules은 컨테이너 내부에 유지 (Mac 파일시스템과 분리)
+      - node_modules:/app/node_modules
+      # pnpm 패키지 캐시 (재시작 시 재다운로드 방지)
+      - pnpm_store:/root/.local/share/pnpm/store
+    ports:
+      - "8080:8080"
+    # pnpm 설치 → 의존성 설치 → dev server 실행
+    # --host 0.0.0.0: 컨테이너 외부에서 접근 가능하도록 (127.0.0.1 대신)
+    # --open 제거: 컨테이너 내부에는 브라우저 없음
+    command: >
+      sh -c "
+        npm install -g pnpm &&
+        pnpm install &&
+        pnpm exec cross-env NODE_ENV=serve webpack-dev-server --hot --host 0.0.0.0
+      "
+
+volumes:
+  node_modules:
+  pnpm_store:
