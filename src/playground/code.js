@@ -162,8 +162,8 @@ Entry.Code = class Code {
         let executedBlocks = [];
         const loopExecutor = [];
 
-        const _executeEvent = _.partial(Entry.dispatchEvent, 'blockExecute');
-        const _executeEndEvent = _.partial(Entry.dispatchEvent, 'blockExecuteEnd');
+        const _executeEvent = Entry.dispatchEvent.bind(Entry, 'blockExecute');
+        const _executeEndEvent = Entry.dispatchEvent.bind(Entry, 'blockExecuteEnd');
 
         for (let i = 0; i < executors.length; i++) {
             const executor = executors[i];
