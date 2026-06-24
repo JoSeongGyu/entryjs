@@ -12,6 +12,8 @@ Entry.ALL_AI_UTILIZE_BLOCK_LIST = {};
 
 module.exports = Entry;
 global.Entry = Entry;
+/* CDN으로 로드된 entry-tool, entry-paint 등이 window._에 의존하므로 명시적으로 노출 */
+global._ = require('lodash');
 
 require('./core/collection');
 require('./core/db');

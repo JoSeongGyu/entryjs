@@ -137,6 +137,8 @@ module.exports = {
         new WebpackManifestPlugin(),
         new webpack.ProvidePlugin({
             Buffer: ['buffer', 'Buffer'],
+            /* CDN 없이도 _ 전역변수를 사용하는 레거시 코드를 위한 lodash 자동 주입 */
+            _: 'lodash',
         }),
         new MiniCssExtractPlugin({
             filename: '[name].css',
